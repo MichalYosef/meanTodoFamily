@@ -1,0 +1,59 @@
+
+<div ng-controller="todoCtrl">
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">Tasks </a>
+            <ul class="right">
+                <li>
+                     <!-- Modal Trigger -->
+                    <a href="#createTaskModal" class="modal-trigger"><i class="material-icons">add</i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+            
+        <h4>Todo Items</h4>
+
+        <!-- <a href="#" class="secondary-content" ng-click="remove(item._id)"><i class="material-icons">delete</i></a> -->
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Task Decription</th>
+                    <th>Task Date</th>
+                    <th>Family Identifier</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items">
+                <td>{{item.id}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.taskDate}}</td>
+                <td>{{item.familyId}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+    </div>
+    <!-- Modal Structure -->
+    <div id="createTaskModal" class="modal">
+        <div class="modal-content">
+            <h4>New TODO :-)</h4>
+            <br>
+            <div class="input-field">
+                <input type="text" id="description" ng-model="description">
+                <label for="description">Description</label>
+            </div>
+            <!-- <div class="input-field">
+                <input type="select" id="familyMemberId" ng-model="familyMemberId">
+                <label for="familyMemberId">family Membe rId</label>
+            </div> -->
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-action modal-close btn-flat" ng-click="createTask()">Create</a>
+        </div>
+    </div>
+            
+</div>

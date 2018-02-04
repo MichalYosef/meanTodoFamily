@@ -1,0 +1,51 @@
+
+   <div class="container"  ng-controller="familyCtrl">
+        <h4>Family members</h4>
+
+                <!-- <a href="#" class="secondary-content" ng-click="remove(item._id)"><i class="material-icons">delete</i></a> -->
+                <table>
+                    <thead>
+                      <tr>
+                          <th>id</th>
+                          <th>Name</th>
+                          <th>Nick Name</th>
+                          <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in items">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.description}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="createModal" class="modal" ng-controller="familyCtrl">
+    <div class="modal-content">
+        <h4>New family member</h4>
+        <br>
+        <div class="input-field">
+            <input type="text" id="name" ng-model="name">
+            <label for="name">Name</label>
+        </div>
+        <br>
+        <div class="input-field">
+            <input type="text" id="nickName" ng-model="nickName">
+            <label for="nickName">nick Name</label>
+        </div>
+        <div class="input-field">
+                <input type="text" id="description" ng-model="description">
+                <label for="description">Description</label>
+        </div>
+        
+    <div class="modal-footer">
+        <a href="#" class="modal-action modal-close btn-flat" ng-click="createFamilyMember()">Create</a>
+    </div>
+</div>
+            
+    
+  
