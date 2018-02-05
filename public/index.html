@@ -17,243 +17,216 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-route.min.js"></script>
-    
+    <!-- <script src="./scripts/client.js"></script> -->
+
 </head>
 
 <body ng-app="todoApp">
-    
     <nav>
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">Todo App</a>
+            <a href="#" class="brand-logo">SPA Todo App</a>
             <ul class="right">
                 <li>
                      <!-- Modal Trigger -->
-                    <!-- <a href="#createModal" class="modal-trigger"><i class="material-icons">add</i></a> -->
+                    <a href="#createModal" class="modal-trigger"><i class="material-icons">add</i></a>
                 </li>
                 <li><a href='#!/'>Home</a></li>
-                <li><a href='#!/items'>Todo</a></li>
+                <li><a href='#!/tasks'>Tasks</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Home -->
-    <div ng-controller="familyCtrl">
-        <!-- Modal Trigger -->
-        
-                <!-- Modal Trigger -->
-        <a href="#createModal" class="modal-trigger"><i class="material-icons">add Family member</i></a>
-           
-
-        <div class="container">
+    <table ng-controller="familyCtrl" class="bordered striped highlight">
+        <h4>Family members</h4>
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Nick Name</th>
+              <th>Family role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="member in family_members">
+            <td>{{member.name}}</td>
+            <td>{{member.nickname}}</td>
+            <td>{{member.family_role}}</td>
+          </tr>
+        </tbody>
+    </table>
             
-            <h4>Family members</h4>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Name</th>
-                        <th>Nick Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in items">
-                    <td>{{item.id}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.description}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        
-        <!-- Modal Structure -->
-        <div id="createModal" class="modal">
-            <div class="modal-content">
-                <h4>New family member</h4>
-                <br>
-                <div class="input-field">
-                    <input type="text" id="name" ng-model="name">
-                    <label for="name">Name</label>
-                </div>
-                <br>
-                <div class="input-field">
-                    <input type="text" id="nickName" ng-model="nickName">
-                    <label for="nickName">nick Name</label>
-                </div>
-                <div class="input-field">
-                        <input type="text" id="description" ng-model="description">
-                        <label for="description">Description</label>
-                </div>
-                
-            <div class="modal-footer">
-                <a href="#" class="modal-action modal-close btn-flat" ng-click="createFamilyMember()">Create</a>
+    <table ng-controller="taskCtrl" class="bordered striped highlight">
+        <h4>Tasks</h4>
+         <!-- Modal Trigger -->
+         <a href="#createTaskModal" class="modal-trigger right" data-ng-click='loadFamilyMembers()'>Add new Task</i></a>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Creation date</th>
+                <th>Family member</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="task in tasks">
+            <td>{{task.description}}</td>
+            <td>{{task.date}}</td>
+            <td>{{task.name}}</td>
+            <td ng-click="remove(task._id)"> Delete </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <!-- Modal Structure -->
+    <div ng-controller="taskCtrl" id="createTaskModal" class="modal">
+        <div class="modal-content">
+            <h4>New Task</h4>
+            <br>
+            <div class="input-field">
+                <input type="text" id="description" ng-model="newtask.description">
+                <label for="description">Description</label>
             </div>
+            <div class="input-field">
+                <select ng-model="newtask.family_member_id" ng-options="family_members.id as family_members.name for member in family_members"></select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-action modal-close btn-flat" ng-click="create()">Create</a>
         </div>
     </div>
-    </div>
-   
-    <!-- Template's content -->
-    <!-- <div class='row frameBorder spaceVertical'>
-        <ng-view></ng-view>
-    </div> -->
-   
             
-    <div ng-controller="todoCtrl">
-            <nav>
-                <div class="nav-wrapper container">
-                    <a href="#" class="brand-logo">Tasks </a>
-                    <ul class="right">
-                        <li>
-                             <!-- Modal Trigger -->
-                            <a href="#createTaskModal" class="modal-trigger"><i class="material-icons">add</i></a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="container">
-                    
-                <h4>Todo Items</h4>
-        
-                <!-- <a href="#" class="secondary-content" ng-click="remove(item._id)"><i class="material-icons">delete</i></a> -->
-                <table>
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>Task Decription</th>
-                            <th>Task Date</th>
-                            <th>Family Identifier</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="item in items">
-                        <td>{{item.id}}</td>
-                        <td>{{item.description}}</td>
-                        <td>{{item.taskDate}}</td>
-                        <td>{{item.familyId}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-        
-                
-            </div>
-            <!-- Modal Structure -->
-            <div id="createTaskModal" class="modal">
-                <div class="modal-content">
-                    <h4>New TODO :-)</h4>
-                    <br>
-                    <div class="input-field">
-                        <input type="text" id="description" ng-model="description">
-                        <label for="description">Description</label>
-                    </div>
-                    <!-- <div class="input-field">
-                        <input type="select" id="familyMemberId" ng-model="familyMemberId">
-                        <label for="familyMemberId">family Membe rId</label>
-                    </div> -->
-                </div>
-                <div class="modal-footer">
-                    <a href="#" class="modal-action modal-close btn-flat" ng-click="createTask()">Create</a>
-                </div>
-            </div>
-                    
-        </div>
+    
   
     <script type="text/javascript">
-
-        // const path = require('path');
-
-        // app.use('/public', express.static(path.join(__dirname, 'public')))
-        // app.use('/views', express.static(path.join(__dirname, 'views')))
-
-        // $(document).ready(function()
-        // {
-        //     $('.modal').modal();
-        // });
-
         
+        // Initialize angular client app
         const app = angular.module('todoApp',[]);
-        // var app = angular.module('todoApp',['ngRoute']);
+     
+        // This is the SERVICE that sends requests to the server
 
-        // app.config(function($routeProvider){
-
-        //     $routeProvider.when("/",{
-        //         templateUrl: 'views/home.html',
-        //         controller: 'todoCtrl'
-        //     })
-        //     .when("/items",{
-        //         templateUrl: 'views/tasks.html',
-        //         controller: 'tasksCtrl'
-        //     })
-        //     .otherwise({redirectTo:'/'});
-
-        // });
-
-        app.controller('familyCtrl', function($scope, $http)
+        app.service('talkToServer', function($http)
         {
-            $scope.description ='';
-            $http.get('/api/family').then( function(res){
-                $scope.items = res.data;
-            });
+            this.getFamilyMembers = function( onSuccess, onError ) 
+            {
+                $http.get('/family').then( onSuccess, onError);
+            }
 
-            $scope.createFamilyMember = function(){
-                $http.post('/api/family', { 
-                    name: $scope.name,
-                    nickName: $scope.nickName,
-                    description: $scope.description
+            this.getTasks = function( onSuccess, onError ) 
+            {
+                $http.get('/tasks').then(  onSuccess, onError);
+            }
 
-                }).then(function(result){
-                    $scope.items.push(result.data)
-                    $http.get('/api/family').then( function(res){
-                            $scope.items = res.data;    
-                        })
-                }).catch(function(er) {
-                    console.log(er)
-                })
-                $scope.description =''
-                $scope.nickName =''
-                $scope.name =''
+            this.createTask = function( newTask, onSuccess, onError ) 
+            {
+                $http.post('/tasks', newTask).then(  onSuccess, onError);
             }
 
         });
 
+        // family controller
 
-        app.controller('todoCtrl', function($scope, $http)
+        app.controller('familyCtrl', function( $scope, talkToServer)
         {
-            $scope.description ='';
-            $http.get('/api/items').then( function(res){
-                $scope.items = res.data;
-            });
+            // $scope.description ='';
+            talkToServer.getFamilyMembers( 
+                function( response){ $scope.family_members = response.data },  //onSuccess
+                function(response){ console.log('error ' + response )} // onError
+            )
+
+        })
+
+        // tasks controller
+
+        app.controller('taskCtrl', function($scope, $scope, talkToServer)
+        {
+            
+            talkToServer.getTasks( 
+                function( response){ $scope.tasks = response.data },  //onSuccess
+                function(response){ console.log('error ' + response )} // onError
+            )
+
+            $scope.create = talkToServer.createTask( $scope.newTask,
+                function( response){ $scope.tasks.push(response.data); newtask.description=''},  //onSuccess
+                function(response){ console.log('error ' + response )} // onError
+            )
+
+            $scope.loadFamilyMembers = function(){
+                // get family members to load into select for creating new task
+                talkToServer.getFamilyMembers( 
+                    function( response){ $scope.family_members = response.data },  //onSuccess
+                    function(response){ console.log('error ' + response ); throw response;} // onError
+                )
+            }
+
+            // $scope.create = function(){
+            //     $http.post('/tasks', { description: $scope.description}).then(function(result){
+            //         $scope.items.push(result.data)
+            //     }).catch(function(er) {
+            //         console.log(er)
+            //     })
+            //     $scope.description =''
+            // }
 
             $scope.remove = function(id){
-                $http.delete('/api/items/' + id).then(function(result){
-                    if(result)
-                    {
-                        $http.get('/api/items').then( function(res){
-                            $scope.items = res.data;    
-                        })
-                    }
-                }).catch(function(er) {
+
+                console.log('delete ');
+                // $http.delete('/tasks/' + id).then(function(result){
+                //     if(result)
+                //     {
+                //         $http.get('/family').then( function(res){
+                //             $scope.items = res.data;    
+                //         })
+                //     }
+                // }).catch(function(er) {
                     
-                    console.log(er)
-                })
+                //     console.log(er)
+                // })
             }
-
-            $scope.create = function(){
-                $http.post('/api/items', { description: $scope.description}).then(function(result){
-                    $scope.items.push(result.data)
-                }).catch(function(er) {
-                    console.log(er)
-                })
-                $scope.description =''
-            }
-           
-
         });
+
+        $(document).ready(function()
+        {
+            $('.modal').modal();
+        });
+
+        // app.controller('todoCtrl', function($scope, $http)
+        // {
+        //     $scope.description ='';
+        //     $http.get('/api/items').then( function(res){
+        //         $scope.items = res.data;
+        //     });
+
+        //     $scope.remove = function(id){
+        //         $http.delete('/api/items/' + id).then(function(result){
+        //             if(result)
+        //             {
+        //                 $http.get('/api/items').then( function(res){
+        //                     $scope.items = res.data;    
+        //                 })
+        //             }
+        //         }).catch(function(er) {
+                    
+        //             console.log(er)
+        //         })
+        //     }
+
+        //     $scope.create = function(){
+        //         $http.post('/api/items', { description: $scope.description}).then(function(result){
+        //             $scope.items.push(result.data)
+        //         }).catch(function(er) {
+        //             console.log(er)
+        //         })
+        //         $scope.description =''
+        //     }
+        
+
+        // });
+
+
+        
+
+
 
     </script>
 
-
-    
+         
 </body>
 </html>
