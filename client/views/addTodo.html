@@ -1,0 +1,20 @@
+<div ng-controller="addTodoCtrl">
+    <h4>New Task</h4>
+    <br>
+    <span>
+        <label for="description">Description</label>
+        <textarea class="form-control" name="description" rows="4" cols="60" placeholder="write task description here..." ng-model="newtask.description" required autofocus></textarea>
+    </span>
+    <br>
+    
+
+    <span>
+        <h4>Choose family member </h4>
+        <select class="form-control" ng-model="selectedFamilyMember">
+    
+            <option ng-repeat="familyMember in familyMembers" value="{{familyMember.id}}">{{familyMember.name}}</option>
+        </select>
+    </span>
+    
+    <button class="btn-flat" ng-click="create()">Create</button>
+</div>
